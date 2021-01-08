@@ -19,6 +19,14 @@ const Content = (props) => {
   )
 }
 
+const Total = (props) => {
+  return(
+    <div>
+    <p> Number of exercises {props.exercises1 + props.exercises2 + props.exercises3} </p>
+    </div>
+  )
+}
+
 function App() {
   const course = 'Half Stack application development'
   const part1 = 'Fundamentals of React'
