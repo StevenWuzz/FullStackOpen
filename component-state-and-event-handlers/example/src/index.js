@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom';
 
-const Button = (props) => {
+const Button = ({handleClick, text}) => {
   return (
-    <button onClick={props.handleClick}>
-      {props.text}
+    <button onClick={handleClick}>
+      {text}
     </button>
   )
 }
 
-const Display = (props) => {
+const Display = ({counter}) => {
   return (
-    <div>{props.counter}</div>
+    <div>{counter}</div>
   )
 }
 
