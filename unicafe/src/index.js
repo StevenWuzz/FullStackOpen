@@ -23,6 +23,12 @@ const Display = ({type, stats}) => {
   )
 }
 
+const CalcTotal = ({good, neutral, bad}) => good + neutral + bad
+const CalcAverage = ({good, neutral, bad}) => 
+(good - bad) / (good + neutral + bad)
+const CalcPositive = ({good, neutral, bad}) => 
+good / (good + neutral + bad)
+
 const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
@@ -38,10 +44,6 @@ const App = () => {
     setBad(bad + 1)
   }
 
-  const calcTotal = () => good + neutral + bad
-  const calcAverage = () => (good - bad) / calcTotal()
-  const calcPositive = () => good / calcTotal()
-
   return (
     <div>
     <Header header = {'Give Feedback'} />
@@ -52,9 +54,15 @@ const App = () => {
     <Display type = {'Good'} stats = {good} />
     <Display type = {'Neutral'} stats = {neutral} />
     <Display type = {'Bad'} stats = {bad} />
-    <Display type = {'All'} stats = {calcTotal()} />
-    <Display type = {'Average'} stats = {calcAverage()} />
-    <Display type = {'Positive'} stats = {calcPositive()} />
+    <Display type = {'All'} stats = {
+      <CalcTotal good = {good} neutral = {neutral} bad = {bad} />
+    } />
+    <Display type = {'Average'} stats = {
+      <CalcAverage good = {good} neutral = {neutral} bad = {bad} />
+    } />
+    <Display type = {'Positive'} stats = {
+      <CalcPositive good = {good} neutral = {neutral} bad = {bad} />
+    } />
     </div>
   )
 }
