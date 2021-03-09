@@ -23,11 +23,34 @@ const Display = ({type, stats}) => {
   )
 }
 
-const CalcTotal = ({good, neutral, bad}) => good + neutral + bad
-const CalcAverage = ({good, neutral, bad}) => 
-(good - bad) / (good + neutral + bad)
-const CalcPositive = ({good, neutral, bad}) => 
-good / (good + neutral + bad)
+const Statistics = ({text, good, neutral, bad}) => {
+
+  const type_arr = ["Good", "Neutral", "Bad", "All", "Average", "Positive"]
+  const val_arr = [good, neutral, bad, good + neutral + bad,(good - bad) / (good + neutral + bad), good / (good + neutral + bad)]
+
+  var match = 0
+  for(let i = 0; i <= 5; i++){
+    if(text === type_arr[i]) match = i
+  }
+
+  if(good > 0 || bad > 0 || neutral > 0) {
+    return(
+      <div>
+      <Display type = {type_arr[match]} stats = {val_arr[match]} />
+      </div>
+    )
+  }
+  else if(text === "Good" && good === 0)
+  return(
+    <div>
+    <p> No Feedbacks Given</p>
+    </div>
+  )
+
+  return(
+    <div></div>
+  )
+}
 
 const App = () => {
   const [good, setGood] = useState(0)
@@ -51,18 +74,13 @@ const App = () => {
     <Button onClick = {handleNeutral} text = 'Neutral' />
     <Button onClick = {handleBad} text = 'Bad' />
     <Header header = {'Statistics'} />
-    <Display type = {'Good'} stats = {good} />
-    <Display type = {'Neutral'} stats = {neutral} />
-    <Display type = {'Bad'} stats = {bad} />
-    <Display type = {'All'} stats = {
-      <CalcTotal good = {good} neutral = {neutral} bad = {bad} />
-    } />
-    <Display type = {'Average'} stats = {
-      <CalcAverage good = {good} neutral = {neutral} bad = {bad} />
-    } />
-    <Display type = {'Positive'} stats = {
-      <CalcPositive good = {good} neutral = {neutral} bad = {bad} />
-    } />
+    <Statistics text = {"Good"} good = {good} neutral = {neutral} bad = {bad} />
+    <Statistics text = {"Neutral"} good = {good} neutral = {neutral} bad = {bad} />
+    <Statistics text = {"Bad"} good = {good} neutral = {neutral} bad = {bad} />
+    <Statistics text = {"All"} good = {good} neutral = {neutral} bad = {bad} />
+    <Statistics text = {"Average"} good = {good} neutral = {neutral} bad = {bad} />
+    <Statistics text = {"Positive"} good = {good} neutral = {neutral} bad = {bad} />
+
     </div>
   )
 }
