@@ -34,11 +34,12 @@ const Total = ({parts}) => {
 
 
 const Course = ({course}) => { 
+
 return(
     <div>
     <Header name = {course.name} />
-    {course.parts.map(parts =>
-        <Content key={parts.id} parts = {parts} />
+    {course.parts.map(part =>
+        <Content key={part.id} parts = {part} />
     )}
     <Total parts = {course.parts} />
     </div>
