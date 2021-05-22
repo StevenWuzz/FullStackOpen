@@ -9,10 +9,10 @@ const Header = ({name}) => {
 }
 
 
-const Content = ({parts}) => {
+const Content = ({part}) => {
     return(
         <div>
-        <p> {parts.name} {parts.exercises} </p>
+        <p> {part.name} {part.exercises} </p>
         </div>
       )
 }
