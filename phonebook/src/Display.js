@@ -1,6 +1,6 @@
-const Display = ({persons}) => {
+const Display = ({contacts}) => {
     return (
-        persons.map(person => <li key = {person.name}> {person.name} </li>)
+        contacts.map(contact => <li key = {contact.name}> {contact.name} {contact.phone} </li>)
     )
 }
 export default Display

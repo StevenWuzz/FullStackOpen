@@ -2,43 +2,53 @@ import React, { useState } from 'react'
 import Display from './Display'
 
 const App = () => {
-  const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas' }
-  ]) 
+  const [ contacts, setContacts ] = useState([])
   const [ newName, setNewName ] = useState('')
+  const [ newPhone, setNewPhone ] = useState('')
 
   const addContact = (event) => {
     event.preventDefault();
 
-    if(persons.some(person => person.name === newName)){
-      alert(`${newName} is already added to phonebook`);
+    if(contacts.some(contact => contact.name === newName)){
+      alert(`${newName} is already added to the phonebook`);
     }
     else{
-      setPersons(persons.concat({name: newName}));
+      setContacts(contacts.concat({name: newName, phone: newPhone}));
       setNewName('');
+      setNewPhone('');
     }
   }
   
-  const handleContactChange = (event) => {
+  const handleNameChange = (event) => {
     setNewName(event.target.value);
+  }  
+
+  const handlePhoneChange = (event) => {
+    setNewPhone(event.target.value);
   }  
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+      <h2>Add New Contacts</h2>
       <form onSubmit = {addContact}>
         <div>
           Name: <input 
           value = {newName}
-          onChange = {handleContactChange}/>
+          onChange = {handleNameChange}/>
+        </div>
+        <div>
+          Phone: <input 
+          value = {newPhone}
+          onChange = {handlePhoneChange}/>
         </div>
         <div>
           <button type="submit">add</button>
         </div>
       </form>
-      <h2>Numbers</h2>
+      <h2>Contacts</h2>
       <ul>
-        <Display persons = {persons} />
+        <Display contacts = {contacts} /> 
       </ul>
     </div>
   )
