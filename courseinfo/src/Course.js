@@ -39,7 +39,7 @@ return(
     <div>
     <Header name = {course.name} />
     {course.parts.map(part =>
-        <Content key={part.id} parts = {part} />
+        <Content key={part.id} part = {part} />
     )}
     <Total parts = {course.parts} />
     </div>

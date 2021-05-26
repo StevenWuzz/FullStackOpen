@@ -1,3 +1,7 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+
 const Hello = (props) => {
   return (
     <div>
@@ -20,3 +24,5 @@ const App = () => {
     </div>
   )
 }
+
+ReactDOM.render(<App />, document.getElementById('root'))
