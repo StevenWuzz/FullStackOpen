@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Display from './Display'
 import Search from './Search'
+import axios from 'axios'
 
 const App = () => {
   const [ contacts, setContacts ] = useState([])
@@ -9,6 +10,13 @@ const App = () => {
   const [ newSearch, setNewSearch] = useState('')
   const [ showAll, setShowAll ] = useState(true)
 
+  useEffect(() => {
+    axios
+    .get('http://localhost:3001/persons')
+    .then(response =>
+      setContacts(response.data))
+  }, [])
+
   const addContact = (event) => {
     event.preventDefault();
 
@@ -16,7 +24,7 @@ const App = () => {
       alert(`${newName} is already added to the phonebook`);
     }
     else{
-      setContacts(contacts.concat({name: newName, phone: newPhone}));
+      setContacts(contacts.concat({name: newName, number: newPhone}));
       setNewName('');
       setNewPhone('');
     }
