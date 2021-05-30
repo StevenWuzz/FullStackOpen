@@ -29,9 +29,7 @@ const App = () => {
         onChange = {handleSearchCountry} />
       </div>
       <div> 
-        <ul> 
-          <Display filteredCountries = {filteredCountries} />
-        </ul>
+        <Display filteredCountries = {filteredCountries} />
       </div>
     </div>
   )
