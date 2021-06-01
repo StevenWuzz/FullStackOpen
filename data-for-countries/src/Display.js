@@ -2,7 +2,20 @@ const flagStyle = {
     width : "180px"
 }
 
+const Show = () => {
+
+    const showData = (event) => {
+        event.preventDefault()
+    }
+    return(
+        <form onSubmit = {showData}>
+            <button type = "submit"> Show </button>
+        </form>
+    )
+}
+
 const Display = ({filteredCountries}) => {
+
     if(filteredCountries.length === 1){
         const country = filteredCountries[0]
         return(
@@ -31,7 +44,13 @@ const Display = ({filteredCountries}) => {
     }
 
     return (
-        filteredCountries.map(country => <li key = {country.name}> {country.name} </li>)
+        filteredCountries.map(country => {
+            return(
+                <div>
+                    <li key = {country.name} style={{listStyleType: "none"}}> {country.name} <Show /> </li> 
+                </div>
+            )
+        })
     )
 }
 export default Display

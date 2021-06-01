@@ -76,9 +76,7 @@ const App = () => {
         </div>
       </form>
       <h2>Contacts</h2>
-      <ul>
-        <Display contacts = {contactsToShow} /> 
-      </ul>
+      <Display contacts = {contactsToShow} /> 
     </div>
   )
 }
