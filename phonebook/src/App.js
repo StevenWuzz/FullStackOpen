@@ -8,14 +8,15 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newPhone, setNewPhone ] = useState('')
   const [ newSearch, setNewSearch] = useState('')
-  const [ showAll, setShowAll ] = useState(true)
 
+  /*
   useEffect(() => {
     axios
     .get('http://localhost:3001/persons')
     .then(response =>
       setContacts(response.data))
   }, [])
+  */
 
   const addContact = (event) => {
     event.preventDefault();
@@ -32,12 +33,6 @@ const App = () => {
 
   const handleSearch = (event) => {
     setNewSearch(event.target.value)
-    if(newSearch !== ''){
-      setShowAll(false)
-    }
-    else{
-      setShowAll(true)
-    }
   }
   
   const handleNameChange = (event) => {
@@ -48,7 +43,7 @@ const App = () => {
     setNewPhone(event.target.value);
   }  
 
-  const contactsToShow = showAll ? contacts : Search(contacts, newSearch)
+  const contactsToShow = newSearch === '' ? contacts : Search(contacts, newSearch)
 
   return (
     <div>
