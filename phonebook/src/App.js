@@ -9,7 +9,6 @@ const App = () => {
   const [ newPhone, setNewPhone ] = useState('')
   const [ newSearch, setNewSearch] = useState('')
 
-  
   useEffect(() => {
     contactsService.getAll().then(initialContacts => setContacts(initialContacts))
   }, [])
@@ -29,8 +28,8 @@ const App = () => {
         id: contacts.length + 1
       }
 
-      contactsService.create(newContact).then(returnedContact => {
-        setContacts(contacts.concat(returnedContact))
+      contactsService.create(newContact).then(returnedContacts => {
+        setContacts(contacts.concat(returnedContacts))
         setNewName('');
         setNewPhone('');
       })
@@ -49,6 +48,12 @@ const App = () => {
     setNewPhone(event.target.value);
   }  
 
+  const handleDelete = (contacts, nameToBeDeleted) => {
+    contactsService.remove(contacts, nameToBeDeleted)
+    .then(() => setContacts(contacts.filter(contact => contact.name !== nameToBeDeleted)))
+  }
+
+  
   const contactsToShow = newSearch === '' ? contacts : Search(contacts, newSearch)
 
   return (
@@ -77,7 +82,7 @@ const App = () => {
         </div>
       </form>
       <h2>Contacts</h2>
-      <Display contacts = {contactsToShow} /> 
+      <Display contacts = {contactsToShow} handleDelete = {handleDelete} /> 
     </div>
   )
 }

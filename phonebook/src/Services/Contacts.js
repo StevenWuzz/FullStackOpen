@@ -12,4 +12,12 @@ const create = (newContact) => {
     return request.then(response => response.data) 
 }
 
-export default {getAll, create}
+const remove = (contacts, nameToBeDeleted) => {
+    const contactToBeDeleted = contacts.find(person => person.name === nameToBeDeleted)
+    const id = contactToBeDeleted.id
+    const request = axios.delete(`${baseURL}/${id}`);
+    return request.then(response => response.data)
+}
+
+
+export default {getAll, create, remove}
