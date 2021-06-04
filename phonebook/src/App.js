@@ -18,10 +18,15 @@ const App = () => {
     event.preventDefault();
 
     if(contacts.some(contact => contact.name === newName)){
-      alert(`${newName} is already added to the phonebook`);
+      //alert(`${newName} is already added to the phonebook`);
+
+      const confirm = window.confirm(`${newName} is already added to the phonebook, do you want to replace the old number with a new one?`)
+      if(confirm){
+        contactsService.update(contacts, newPhone, newName)
+        .then(updatedContact => setContacts(contacts.map(contact => contact.name !== newName ? contact: updatedContact)))
+      }
     }
     else{
-
       const newContact = {
         name: newName,
         number: newPhone,

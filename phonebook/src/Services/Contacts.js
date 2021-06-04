@@ -19,5 +19,13 @@ const remove = (contacts, nameToBeDeleted) => {
     return request.then(response => response.data)
 }
 
+const update = (contacts, newPhoneNumber, newName) => {
+    const contactToBeUpdated = contacts.find(person => person.name === newName)
+    const id = contactToBeUpdated.id
+    const updatedContact = {...contactToBeUpdated, number: newPhoneNumber}
+    const request = axios.put(`${baseURL}/${id}`, updatedContact)
+    return request.then(response => response.data)
+}
 
-export default {getAll, create, remove}
+
+export default {getAll, create, remove, update}
