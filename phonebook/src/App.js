@@ -49,8 +49,11 @@ const App = () => {
   }  
 
   const handleDelete = (contacts, nameToBeDeleted) => {
-    contactsService.remove(contacts, nameToBeDeleted)
-    .then(() => setContacts(contacts.filter(contact => contact.name !== nameToBeDeleted)))
+    const confirm = window.confirm(`Are you sure that you want to delete ${nameToBeDeleted}?`)
+    if(confirm){
+      contactsService.remove(contacts, nameToBeDeleted)
+      .then(() => setContacts(contacts.filter(contact => contact.name !== nameToBeDeleted)))
+    }
   }
 
   
