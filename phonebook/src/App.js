@@ -9,14 +9,14 @@ const App = () => {
   const [ newPhone, setNewPhone ] = useState('')
   const [ newSearch, setNewSearch] = useState('')
 
-  /*
+  
   useEffect(() => {
     axios
-    .get('http://localhost:3001/persons')
+    .get('http://localhost:3001/contacts')
     .then(response =>
       setContacts(response.data))
   }, [])
-  */
+  
 
   const addContact = (event) => {
     event.preventDefault();
@@ -25,9 +25,26 @@ const App = () => {
       alert(`${newName} is already added to the phonebook`);
     }
     else{
+
+      const newContacts = {
+        name: newName,
+        number: newPhone,
+        id: contacts.length + 1
+      }
+      
+      axios
+      .post('http://localhost:3001/contacts', newContacts)
+      .then(response => {
+        setContacts(contacts.concat(response.data));
+        setNewName('');
+        setNewPhone('');
+      })
+      
+      /*
       setContacts(contacts.concat({name: newName, number: newPhone}));
       setNewName('');
       setNewPhone('');
+      */
     }
   }
 
