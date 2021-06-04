@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Display from './Display'
 import Search from './Search'
-import axios from 'axios'
+import contactsService from './Services/Contacts.js'
 
 const App = () => {
   const [ contacts, setContacts ] = useState([])
@@ -11,10 +11,7 @@ const App = () => {
 
   
   useEffect(() => {
-    axios
-    .get('http://localhost:3001/contacts')
-    .then(response =>
-      setContacts(response.data))
+    contactsService.getAll().then(initialContacts => setContacts(initialContacts))
   }, [])
   
 
@@ -26,25 +23,17 @@ const App = () => {
     }
     else{
 
-      const newContacts = {
+      const newContact = {
         name: newName,
         number: newPhone,
         id: contacts.length + 1
       }
-      
-      axios
-      .post('http://localhost:3001/contacts', newContacts)
-      .then(response => {
-        setContacts(contacts.concat(response.data));
+
+      contactsService.create(newContact).then(returnedContact => {
+        setContacts(contacts.concat(returnedContact))
         setNewName('');
         setNewPhone('');
       })
-      
-      /*
-      setContacts(contacts.concat({name: newName, number: newPhone}));
-      setNewName('');
-      setNewPhone('');
-      */
     }
   }
 
