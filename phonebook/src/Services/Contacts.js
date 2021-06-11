@@ -1,6 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from "axios"
-const baseURL = "http://localhost:3001/contacts"
+const baseURL = "/api/contacts"
 
 const getAll = () => {
     const request = axios.get(baseURL)
@@ -15,8 +15,7 @@ const create = (newContact) => {
 const remove = (contacts, nameToBeDeleted) => {
     const contactToBeDeleted = contacts.find(person => person.name === nameToBeDeleted)
     const id = contactToBeDeleted.id
-    const request = axios.delete(`${baseURL}/${id}`);
-    return request.then(response => response.data)
+    axios.delete(`${baseURL}/${id}`)
 }
 
 const update = (contacts, newPhoneNumber, newName) => {
