@@ -18,9 +18,8 @@ const App = () => {
     event.preventDefault();
 
     if(contacts.some(contact => contact.name === newName)){
-      //alert(`${newName} is already added to the phonebook`);
-
       const confirm = window.confirm(`${newName} is already added to the phonebook, do you want to replace the old number with a new one?`)
+      
       if(confirm){
         contactsService.update(contacts, newPhone, newName)
         .then(updatedContact => setContacts(contacts.map(contact => contact.name !== newName ? contact: updatedContact)))
@@ -57,7 +56,7 @@ const App = () => {
     const confirm = window.confirm(`Are you sure that you want to delete ${nameToBeDeleted}?`)
     if(confirm){
       contactsService.remove(contacts, nameToBeDeleted)
-      .then(() => setContacts(contacts.filter(contact => contact.name !== nameToBeDeleted)))
+      setContacts(contacts.filter(contact => contact.name !== nameToBeDeleted))
     }
   }
 
