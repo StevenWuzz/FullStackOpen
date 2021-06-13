@@ -85,10 +85,17 @@ const typeDefs = gql`
     published: Int!
     genres: [String!]!
   }
+  
+  type Authors {
+    name: String!
+    bookCount: Int!
+  }
+
   type Query {
     bookCount: Int!
     authorCount: Int!
     allBooks: [Books!]!
+    allAuthors:[Authors!]!
   }
 `
 
@@ -96,8 +103,23 @@ const resolvers = {
   Query: {
     bookCount: () => books.length,
     authorCount: () => authors.length,
-    allBooks: () => books
-  }
+    allBooks: () => books,
+    allAuthors:() => {
+      var map = new Map()
+      for(var ind in books){
+        const authorName = books[ind].author
+        if(map.has(authorName)){
+          const currBookCount = map.get(authorName)
+          map.set(authorName, currBookCount + 1)
+        }
+        else{
+          map.set(authorName, 1)
+        }     
+      }
+      const arr = Array.from(map, ([name, bookCount]) => ({name, bookCount}))
+      return arr
+    }
+  },
 }
 
 const server = new ApolloServer({
