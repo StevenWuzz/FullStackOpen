@@ -38,4 +38,10 @@ describe("Total Likes", () => {
         const expectedResult = 1000 + 150 + 55
         expect(actualResult).toBe(expectedResult)
     })
+
+    const listWithNoBlogs = []
+    test("When the list has no blogs, the total likes 0", () => {
+        const actualResult = totalLikes(listWithNoBlogs)
+        expect(actualResult).toBe(0)
+    })
 })
