@@ -1,8 +1,10 @@
 const express = require('express')
 const cors = require('cors')
-const app = express()
 const mongoose = require('mongoose')
+const blogsRouter = require("./controllers/blogs")
 
+const app = express()
+app.use("/api/blogs", blogsRouter)
 app.use(cors())
 app.use(express.json())
 
