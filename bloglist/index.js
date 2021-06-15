@@ -1,11 +1,6 @@
-const { v4: uuidv4 } = require('uuid');
-const express = require('express')
+const { v4: uuidv4 } = require('uuid')
+const app = require("./app")
 const mongoose = require('mongoose')
-const cors = require('cors')
-const app = express()
-
-app.use(cors())
-app.use(express.json())
 
 const blogSchema = new mongoose.Schema({
     title: String,
@@ -16,11 +11,6 @@ const blogSchema = new mongoose.Schema({
 })
 
 const Blog = mongoose.model('Blog', blogSchema)
-
-const mongoURL = "mongodb+srv://Steven:StevenHans@cluster0.s52wk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
-.then(result => console.log("Connected to MongoDB"))
-.catch(error => console.log("Error connecting to MongoDB: ", error.message))
 
 app.get('/api/blogs', (request, response) => {
     Blog.find({}).then(blogs => response.json(blogs))
