@@ -33,7 +33,7 @@ describe("Total Likes", () => {
             "likes": 1000
         },
     ]
-    test("When the list has multiple blogs, the total likes is the sum of ", () => {
+    test("When the list has multiple blogs, the total likes is the sum of all the blogs' likes", () => {
         const actualResult = totalLikes(listWithMultipleBlogs)
         const expectedResult = 1000 + 150 + 55
         expect(actualResult).toBe(expectedResult)
