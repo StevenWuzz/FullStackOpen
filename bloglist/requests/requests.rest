@@ -1,9 +1,0 @@
-POST http://localhost:3003/api/blogs
-Content-Type: application/json
-
-{
-    "title": "A Day in a Life of a CS Student",
-    "author": "Steven Hans Limantoro",
-    "url": "http://stevenlimantoro.diary.com",
-    "likes": 100
-}
