@@ -1,16 +1,6 @@
 const { v4: uuidv4 } = require('uuid')
 const app = require("./app")
-const mongoose = require('mongoose')
-
-const blogSchema = new mongoose.Schema({
-    title: String,
-    author: String,
-    url: String,
-    likes: Number,
-    id: String
-})
-
-const Blog = mongoose.model('Blog', blogSchema)
+const Blog = require("./models/blog")
 
 app.get('/api/blogs', (request, response) => {
     Blog.find({}).then(blogs => response.json(blogs))
