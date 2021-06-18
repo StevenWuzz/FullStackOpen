@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title": "A Day in Life of a CS Student",
+    "author": "Steven",
+    "url": "http://steven.csdiary.com",
+    "likes": 150
+}
