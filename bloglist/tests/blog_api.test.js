@@ -37,14 +37,14 @@ const newBlogMissingLikes =
         url: "http://kevinhalim.com",
     }
 
-beforeEach(async () => {
-    await Blog.deleteMany({})
-    const blogObjects = initialBlogs.map(blog => new Blog(blog))
-    const savePromiseArray = blogObjects.map(blog => blog.save())
-    await Promise.all(savePromiseArray)
-})
-
 describe('Tests for GET request', () => {
+    beforeEach(async () => {
+        await Blog.deleteMany({})
+        const blogObjects = initialBlogs.map(blog => new Blog(blog))
+        const savePromiseArray = blogObjects.map(blog => blog.save())
+        await Promise.all(savePromiseArray)
+    })
+
     test('Blogs are returned in the correct amount', async () => {
         const response = await api.get('/api/blogs')
         expect(response.body).toHaveLength(2)
@@ -62,17 +62,20 @@ describe('Tests for GET request', () => {
 })
 
 describe('Tests for POST request', () => {
+    beforeEach(async () => {
+        await Blog.deleteMany({})
+    })
+
     test('The number of blogs is increased by one', async () => {
         await api.post('/api/blogs').send(newBlog)
         response = await api.get('/api/blogs')
-        expect(response.body).toHaveLength(initialBlogs.length + 1)
+        expect(response.body).toHaveLength(1)
     })
 
     test('If likes is missing, then it defaults to 0', async () => {
         await api.post('/api/blogs').send(newBlogMissingLikes)
         response = await api.get('/api/blogs')
-        const addedBlog = response.body.find(blog => blog.author === 'Kevin Halim')
-        expect(addedBlog.likes).toEqual(0)
+        expect(response.body[0].likes).toEqual(0)
     })
 })
 

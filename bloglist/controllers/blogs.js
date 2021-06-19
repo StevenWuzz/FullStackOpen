@@ -10,9 +10,7 @@ blogsRouter.post('/', (request, response) => {
     if(!request.body.likes){
       request.body.likes = 0
     }
-
-    console.log(request.body)
-
+    
     const blog = new Blog(request.body)
     blog
       .save()
