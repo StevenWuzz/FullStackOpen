@@ -6,7 +6,7 @@ const api = supertest(app)
 
 const Blog = require("../models/blog")
 
-const initialBlog =
+const initialBlogs =
 [
     {
         title: "A Day in a Life of a CS Student",
@@ -22,18 +22,17 @@ const initialBlog =
     }
 ]
 
-const newBlog = [
+const newBlog =
     {
         title: "Beautiful Life",
         author: "Kevin Halim",
         url: "http://kevinhalim.com",
         likes: 100
     }
-]
 
 beforeEach(async () => {
     await Blog.deleteMany({})
-    const blogObjects = initialBlog.map(blog => new Blog(blog))
+    const blogObjects = initialBlogs.map(blog => new Blog(blog))
     const savePromiseArray = blogObjects.map(blog => blog.save())
     await Promise.all(savePromiseArray)
 })
@@ -59,7 +58,7 @@ describe('Tests for POST request', () => {
     test('The number of blogs is increased by one', async () => {
         await api.post('/api/blogs').send(newBlog)
         response = await api.get('/api/blogs')
-        expect(response.body).toHaveLength(initialBlog.length + 1)
+        expect(response.body).toHaveLength(initialBlogs.length + 1)
     })
 })
 
