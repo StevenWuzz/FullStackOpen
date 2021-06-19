@@ -30,6 +30,13 @@ const newBlog =
         likes: 100
     }
 
+const newBlogMissingLikes = 
+    {
+        title: "Beautiful Life",
+        author: "Kevin Halim",
+        url: "http://kevinhalim.com",
+    }
+
 beforeEach(async () => {
     await Blog.deleteMany({})
     const blogObjects = initialBlogs.map(blog => new Blog(blog))
@@ -59,6 +66,13 @@ describe('Tests for POST request', () => {
         await api.post('/api/blogs').send(newBlog)
         response = await api.get('/api/blogs')
         expect(response.body).toHaveLength(initialBlogs.length + 1)
+    })
+
+    test('If likes is missing, then it defaults to 0', async () => {
+        await api.post('/api/blogs').send(newBlogMissingLikes)
+        response = await api.get('/api/blogs')
+        const addedBlog = response.body.find(blog => blog.author === 'Kevin Halim')
+        expect(addedBlog.likes).toEqual(0)
     })
 })
 
