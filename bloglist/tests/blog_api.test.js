@@ -22,6 +22,15 @@ const initialBlog =
     }
 ]
 
+const newBlog = [
+    {
+        title: "Beautiful Life",
+        author: "Kevin Halim",
+        url: "http://kevinhalim.com",
+        likes: 100
+    }
+]
+
 beforeEach(async () => {
     await Blog.deleteMany({})
     const blogObjects = initialBlog.map(blog => new Blog(blog))
@@ -29,7 +38,7 @@ beforeEach(async () => {
     await Promise.all(savePromiseArray)
 })
 
-describe('Test for GET request', () => {
+describe('Tests for GET request', () => {
     test('Blogs are returned in the correct amount', async () => {
         const response = await api.get('/api/blogs')
         expect(response.body).toHaveLength(2)
@@ -43,6 +52,14 @@ describe('Test for GET request', () => {
     test('Returned blogs have unique identifier called id', async () => {
         const response = await api.get('/api/blogs')
         response.body.map(blog => expect(blog.id).toBeDefined())
+    })
+})
+
+describe('Tests for POST request', () => {
+    test('The number of blogs is increased by one', async () => {
+        await api.post('/api/blogs').send(newBlog)
+        response = await api.get('/api/blogs')
+        expect(response.body).toHaveLength(initialBlog.length + 1)
     })
 })
 
