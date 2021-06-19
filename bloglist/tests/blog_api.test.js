@@ -29,7 +29,7 @@ beforeEach(async () => {
     await Promise.all(savePromiseArray)
 })
 
-describe('GET request returns the correct amount and format', () => {
+describe('Test for GET request', () => {
     test('Blogs are returned in the correct amount', async () => {
         const response = await api.get('/api/blogs')
         expect(response.body).toHaveLength(2)
@@ -38,6 +38,11 @@ describe('GET request returns the correct amount and format', () => {
     test('Blogs are returned in the correct format', async () => {
         await api.get('/api/blogs')
         .expect('Content-Type', /application\/json/)
+    })
+
+    test('Returned blogs have unique identifier called id', async () => {
+        const response = await api.get('/api/blogs')
+        response.body.map(blog => expect(blog.id).toBeDefined())
     })
 })
 
