@@ -23,19 +23,26 @@ const initialBlogs =
 ]
 
 const newBlog =
-    {
-        title: "Beautiful Life",
-        author: "Kevin Halim",
-        url: "http://kevinhalim.com",
-        likes: 100
-    }
+{
+    title: "Beautiful Life",
+    author: "Kevin Halim",
+    url: "http://kevinhalim.com",
+    likes: 100
+}
 
 const newBlogMissingLikes = 
-    {
-        title: "Beautiful Life",
-        author: "Kevin Halim",
-        url: "http://kevinhalim.com",
-    }
+{
+    title: "Beautiful Life",
+    author: "Kevin Halim",
+    url: "http://kevinhalim.com",
+}
+
+const newBlogMissingUrlTitle = 
+{
+    author: "Sergio Vieri",
+    likes: 200
+}
+
 
 describe('Tests for GET request', () => {
     beforeEach(async () => {
@@ -76,6 +83,12 @@ describe('Tests for POST request', () => {
         await api.post('/api/blogs').send(newBlogMissingLikes)
         response = await api.get('/api/blogs')
         expect(response.body[0].likes).toEqual(0)
+    })
+
+    test('If URL and Titles are missing, then return status code 400', async () => {
+        await api.post('/api/blogs')
+        .send(newBlogMissingUrlTitle)
+        .expect(400)
     })
 })
 
