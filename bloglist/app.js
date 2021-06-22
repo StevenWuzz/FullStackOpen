@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 const blogsRouter = require("./controllers/blogs")
+const usersRouter = require("./controllers/users")
 const mongoURL = require("./utils/config").MONGODB_URI
 
 mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
@@ -10,5 +11,6 @@ mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true, us
 app.use(cors())
 app.use(express.json())
 app.use("/api/blogs", blogsRouter)
+app.use("/api/users", usersRouter)
 
 module.exports = app
