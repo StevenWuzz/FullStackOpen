@@ -13,14 +13,8 @@ usersRouter.post('/', async (request, response) => {
         passwordHash,
         name: request.body.name
     })
-    try{
-        const savedUser = await newUser.save()
-        response.json(savedUser)
-    }
-    catch(exception){
-        //next(exception)
-        response.json({Error: "Cannot save the new user"})
-    }
+    const savedUser = await newUser.save()
+    return response.json(savedUser)
 })
 
 usersRouter.get('/', async (request, response) => {
