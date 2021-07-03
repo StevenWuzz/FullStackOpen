@@ -8,14 +8,6 @@ blogsRouter.get('/', async (request, response) => {
     return response.json(returnedBlogs)
 })
 
-const tokenExtractor = request => {
-  const authorization = request.get('authorization')
-  if(authorization && authorization.startsWith("Bearer ")){
-    return authorization.substring(7)
-  }
-  return null
-}
-
 blogsRouter.post('/', async (request, response) => {
     body = request.body
 
@@ -27,7 +19,7 @@ blogsRouter.post('/', async (request, response) => {
       request.body.likes = 0
     }  
     
-    const token = tokenExtractor(request)
+    const token = request.token
     if(token === null){
       return response.status(401).json({error: "Token can't be found"})
     }
