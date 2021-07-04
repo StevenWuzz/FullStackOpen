@@ -10,6 +10,7 @@ blogsRouter.get('/', async (request, response) => {
 
 blogsRouter.post('/', async (request, response) => {
     body = request.body
+    console.log(body)
 
     if(!(body.title) && !(body.url)){
       return response.status(400).end()
@@ -19,17 +20,7 @@ blogsRouter.post('/', async (request, response) => {
       request.body.likes = 0
     }  
     
-    const token = request.token
-    if(token === null){
-      return response.status(401).json({error: "Token can't be found"})
-    }
-    
-    const decodedToken = jwt.verify(token, process.env.SECRET)
-    if(!decodedToken){
-      return response.status(401).json({error: "Token can't be verified or decoded"})
-    }
-    
-    const user = await User.findById(decodedToken.id)
+    const user = request.user
     
     const blog = new Blog({
       title: body.title,
