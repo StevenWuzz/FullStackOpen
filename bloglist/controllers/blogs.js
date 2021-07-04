@@ -57,9 +57,29 @@ blogsRouter.delete('/:id', async(request, response) => {
     return response.status(401).json({error: "Token can't be verified or decoded"})
   }
 
-  const params = request.params
-  await Blog.findByIdAndRemove(params.id)
-  response.send(`Blog with id ${params.id} has been successfully deleted`)
+  const requestedBlogId = request.params.id
+  const blog = await Blog.findById(requestedBlogId)
+
+  const requestedUserId = decodedToken.id
+  const correctUserId = blog.user._id
+
+  if(requestedUserId.toString() === correctUserId.toString()){
+    await Blog.findByIdAndRemove(requestedBlogId)
+
+    const user = await User.findById(requestedUserId)
+    user.blogs = user.blogs.filter(id => id === requestedBlogId)
+    const newUserInfo = {
+      blogs: user.blogs,
+      username: user.username,
+      name: user.name,
+    }
+    await User.findByIdAndUpdate(requestedUserId, newUserInfo, {new: true})
+
+    response.send(`Blog with id ${requestedBlogId} has been successfully deleted`)
+  }
+  else{
+    response.status(400).send('User is unauthorized to delete the blog')
+  }
 })
 
 module.exports = blogsRouter
