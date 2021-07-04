@@ -4,7 +4,7 @@ const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
 blogsRouter.get('/', async (request, response) => {
-    const returnedBlogs = await Blog.find({}).populate('user')
+    const returnedBlogs = await Blog.find({}).populate('user', {username: 1, name: 1})
     return response.json(returnedBlogs)
 })
 
@@ -45,5 +45,21 @@ blogsRouter.post('/', async (request, response) => {
     return response.json(savedBlog)
     
   })
+
+blogsRouter.delete('/:id', async(request, response) => {
+  const token = request.token
+  if(token === null){
+    return response.status(401).json({error: "Token can't be found"})
+  }
+    
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+  if(!decodedToken){
+    return response.status(401).json({error: "Token can't be verified or decoded"})
+  }
+
+  const params = request.params
+  await Blog.findByIdAndRemove(params.id)
+  response.send(`Blog with id ${params.id} has been successfully deleted`)
+})
 
 module.exports = blogsRouter
